@@ -1,0 +1,101 @@
+register:
+  post:
+    summary: Регистрация нового пользователя
+    description: Создает нового пользователя в системе
+    tags:
+      - Authentication
+    x-isSecure: false
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - email
+              - password
+              - first_name
+              - last_name
+            properties:
+              email:
+                type: string
+                format: email
+                description: Email адрес пользователя
+                example: user@example.com
+              password:
+                type: string
+                format: password
+                minLength: 8
+                description: Пароль пользователя (минимум 8 символов)
+                example: securePassword123
+              first_name:
+                type: string
+                description: Имя пользователя
+                example: Иван
+              last_name:
+                type: string
+                description: Фамилия пользователя
+                example: Иванов
+    responses:
+      '201':
+        description: Пользователь успешно зарегистрирован
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  description: Сообщение об успешной регистрации
+                  example: Пользователь успешно зарегистрирован
+                user:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: Уникальный идентификатор пользователя
+                      example: 1
+                    email:
+                      type: string
+                      format: email
+                      description: Email адрес пользователя
+                      example: user@example.com
+                    first_name:
+                      type: string
+                      description: Имя пользователя
+                      example: Иван
+                    last_name:
+                      type: string
+                      description: Фамилия пользователя
+                      example: Иванов
+      '400':
+        description: Ошибка валидации данных
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: array
+                  items:
+                    type: string
+                  description: Ошибки валидации поля email
+                  example: ["Пользователь с таким email уже существует"]
+                password:
+                  type: array
+                  items:
+                    type: string
+                  description: Ошибки валидации поля password
+                  example: ["Пароль должен содержать минимум 8 символов"]
+                first_name:
+                  type: array
+                  items:
+                    type: string
+                  description: Ошибки валидации поля first_name
+                  example: ["Это поле обязательно"]
+                last_name:
+                  type: array
+                  items:
+                    type: string
+                  description: Ошибки валидации поля last_name
+                  example: ["Это поле обязательно"]
