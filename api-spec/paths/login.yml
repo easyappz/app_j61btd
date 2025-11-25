@@ -1,0 +1,94 @@
+login:
+  post:
+    summary: Авторизация пользователя
+    description: Выполняет вход пользователя в систему и возвращает токен авторизации
+    tags:
+      - Authentication
+    x-isSecure: false
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+                format: email
+                description: Email адрес пользователя
+                example: user@example.com
+              password:
+                type: string
+                format: password
+                description: Пароль пользователя
+                example: securePassword123
+    responses:
+      '200':
+        description: Пользователь успешно авторизован
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  description: Сообщение об успешной авторизации
+                  example: Успешная авторизация
+                token:
+                  type: string
+                  description: Токен авторизации для дальнейших запросов
+                  example: 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
+                user:
+                  type: object
+                  description: Данные авторизованного пользователя
+                  properties:
+                    id:
+                      type: integer
+                      description: Уникальный идентификатор пользователя
+                      example: 1
+                    email:
+                      type: string
+                      format: email
+                      description: Email адрес пользователя
+                      example: user@example.com
+                    first_name:
+                      type: string
+                      description: Имя пользователя
+                      example: Иван
+                    last_name:
+                      type: string
+                      description: Фамилия пользователя
+                      example: Иванов
+      '401':
+        description: Ошибка аутентификации
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  description: Сообщение об ошибке аутентификации
+                  example: Неверный email или пароль
+      '400':
+        description: Ошибка валидации данных
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: array
+                  items:
+                    type: string
+                  description: Ошибки валидации поля email
+                  example: ["Это поле обязательно"]
+                password:
+                  type: array
+                  items:
+                    type: string
+                  description: Ошибки валидации поля password
+                  example: ["Это поле обязательно"]

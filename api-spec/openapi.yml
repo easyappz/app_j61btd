@@ -9,6 +9,8 @@ servers:
 paths:
   /register/:
     $ref: './paths/register.yml#/register'
+  /login/:
+    $ref: './paths/login.yml#/login'
 components:
   schemas:
     Error:
