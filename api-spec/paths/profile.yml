@@ -1,0 +1,54 @@
+profile:
+  get:
+    summary: Получение профиля пользователя
+    description: Возвращает данные профиля авторизованного пользователя
+    tags:
+      - Profile
+    x-isSecure: true
+    security:
+      - TokenAuth: []
+    parameters:
+      - in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+          pattern: '^Token .+$'
+        description: Токен авторизации в формате 'Token {token}'
+        example: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
+    responses:
+      '200':
+        description: Данные профиля пользователя успешно получены
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: Уникальный идентификатор пользователя
+                  example: 1
+                email:
+                  type: string
+                  format: email
+                  description: Email адрес пользователя
+                  example: user@example.com
+                first_name:
+                  type: string
+                  description: Имя пользователя
+                  example: Иван
+                last_name:
+                  type: string
+                  description: Фамилия пользователя
+                  example: Иванов
+      '401':
+        description: Ошибка авторизации
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                detail:
+                  type: string
+                  description: Сообщение об ошибке авторизации
+                  example: Учетные данные не были предоставлены

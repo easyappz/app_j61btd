@@ -11,7 +11,15 @@ paths:
     $ref: './paths/register.yml#/register'
   /login/:
     $ref: './paths/login.yml#/login'
+  /profile/:
+    $ref: './paths/profile.yml#/profile'
 components:
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix 'Token'
   schemas:
     Error:
       type: object
