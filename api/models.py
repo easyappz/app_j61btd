@@ -7,9 +7,9 @@ class Member(models.Model):
     Custom user model for application users.
     """
     email = models.EmailField(unique=True, max_length=255)
-    password = models.CharField(max_length=128)
-    first_name = models.CharField(max_length=150)
-    last_name = models.CharField(max_length=150)
+    password = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
